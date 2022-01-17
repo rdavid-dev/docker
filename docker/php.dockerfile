@@ -10,6 +10,9 @@ COPY ./config/php/php.ini /usr/local/etc/php/conf.d/php.ini
 # Set working directory
 WORKDIR /var/www/html
 
+# Essentials
+RUN apk add --no-cache sqlite supervisor
+
 # Installing bash
 RUN apk add bash
 RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
