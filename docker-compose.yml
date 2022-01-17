@@ -9,11 +9,15 @@ services:
         - USER=node
         - UID=197609
     container_name: app-php8-2
-    restart: always
+    extra_hosts:
+      -  "host.docker.internal:host-gateway"
+    restart: unless-stopped
     ports:
         - 9000
     volumes:
       - ./src:/var/www/html
+      - ./docker/config/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./docker/config/php/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
     networks:
       - php8-2-network
 
@@ -25,7 +29,7 @@ services:
         - USER=node
         - UID=197609
     container_name: nginx-php8-2
-    restart: always
+    restart: unless-stopped
     ports:
         - 5010:80
     volumes:
@@ -54,7 +58,7 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - ./docker-db-set:/var/lib/mysql
-      - ./docker/config/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     networks:
       - php8-2-network
 
@@ -71,7 +75,7 @@ services:
       - MYSQL_ROOT_PASSWORD=secret
       - UPLOAD_LIMIT=256M
     volumes:
-      - ./docker/config/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./docker/config/php/php.ini:/usr/local/etc/php/conf.d/php.ini
     depends_on:
       - mysql
     networks:

@@ -6,6 +6,6 @@ ARG UID
 ENV UID=${USER}
 ENV UID=${UID}
 
-COPY ./config/default.conf /etc/nginx/conf.d/default.conf
+COPY ./config/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 RUN mkdir -p /var/www/html

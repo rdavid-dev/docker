@@ -5,7 +5,7 @@ ARG USER
 ARG UID
 
 #COPY php ini
-COPY ./config/php.ini /usr/local/etc/php/conf.d/php.ini
+COPY ./config/php/php.ini /usr/local/etc/php/conf.d/php.ini
 
 # Set working directory
 WORKDIR /var/www/html
@@ -113,6 +113,10 @@ RUN pecl install oauth \
 RUN docker-php-ext-configure pdo_mysql --with-zlib-dir=/usr \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
     && true
+
+# Install X-Debug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
 
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
