@@ -1,0 +1,100 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: ./docker
+      dockerfile: php.dockerfile
+      args:
+        - USER=node
+        - UID=197609
+    container_name: app-php8-2
+    restart: always
+    ports:
+        - 9000
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - php8-2-network
+
+  nginx:
+    build:
+      context: ./docker
+      dockerfile: nginx.dockerfile
+      args:
+        - USER=node
+        - UID=197609
+    container_name: nginx-php8-2
+    restart: always
+    ports:
+        - 5010:80
+    volumes:
+        - ./src:/var/www/html
+    depends_on:
+      - app
+    networks:
+        - php8-2-network
+
+  #MySQL
+  mysql:
+    image:  mariadb:10.7
+    container_name: mysql-php8-2
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3311:3311
+    command: [--max-allowed-packet=67108864]
+    environment:
+      MYSQL_DATABASE: docker
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_RANDOM_ROOT_PASSWORD: root
+      MYSQL_TCP_PORT: 3311
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-db-set:/var/lib/mysql
+      - ./docker/config/my.cnf:/etc/mysql/conf.d/my.cnf
+    networks:
+      - php8-2-network
+
+  #PHPMYADMIN
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - 5012:80
+    environment:
+      - PMA_HOST=mysql-php8-2
+      - PMA_PORT=3311
+      - MYSQL_ROOT_PASSWORD=secret
+      - UPLOAD_LIMIT=256M
+    volumes:
+      - ./docker/config/php.ini:/usr/local/etc/php/conf.d/php.ini
+    depends_on:
+      - mysql
+    networks:
+      - php8-2-network
+
+  #Node
+  npm:
+    image: node:17-alpine3.14
+    container_name: npm-php8-2
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 5003:5003
+      - 5004:5004
+    working_dir: /var/www/html
+    entrypoint: ['npm']
+    networks:
+      - php8-2-network
+
+
+    
+networks:
+  php8-2-network:
+    driver: bridge
+volumes:
+  docker-db-set:
