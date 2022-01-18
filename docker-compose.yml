@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  frontend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: vuejs
+    ports:
+      - 5015:8080
+    volumes:
+      - ./sample-project:/app
+      # - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    
