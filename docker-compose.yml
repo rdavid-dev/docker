@@ -81,6 +81,20 @@ services:
     networks:
       - php8-2-network
 
+  #REDIS
+  redis:
+    image: redis:alpine
+    container_name: redis-php8-2
+    command: redis-server --appendonly yes --requirepass "redis"
+    restart: unless-stopped
+    tty: true
+    volumes:
+    - ./data-redis:/data
+    ports:
+      - "6379:6379"    
+    networks:
+      - php8-2-network
+
   #Node
   npm:
     image: node:17-alpine3.14
@@ -102,3 +116,4 @@ networks:
     driver: bridge
 volumes:
   docker-db-set:
+  data-redis:
