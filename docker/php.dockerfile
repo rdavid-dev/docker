@@ -73,6 +73,7 @@ RUN set -xe \
         libpng-dev \
         libssh2-dev \
         libwebp-dev \
+        libsodium-dev \
         libxml2-dev \
         libxpm-dev \
         libxslt-dev \
@@ -124,6 +125,13 @@ RUN pecl install xdebug \
 # Install Redis
 RUN pecl -v install redis \
     && docker-php-ext-enable redis
+
+# Install pcntl(for horizon)
+RUN  docker-php-ext-install -j$(nproc) pcntl \
+    && true
+
+# Install Sodium(for horizon)
+RUN docker-php-ext-enable sodium
 
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
