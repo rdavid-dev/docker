@@ -1,3 +1,4 @@
 /docker-db-set
-/src/
-src/
+/src
+/data-redis
+/tmp

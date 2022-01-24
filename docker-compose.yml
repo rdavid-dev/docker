@@ -9,15 +9,12 @@ services:
         - USER=node
         - UID=197609
     container_name: app-php8-2
-    extra_hosts:
-      -  "host.docker.internal:host-gateway"
     restart: unless-stopped
     ports:
         - 9000
     volumes:
       - ./src:/var/www/html
-      - ./docker/config/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-      - ./docker/config/php/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
+      - ./tmp/xdebug:/logs/xdebug
     networks:
       - php8-2-network
 
@@ -109,8 +106,6 @@ services:
     networks:
       - php8-2-network
 
-
-    
 networks:
   php8-2-network:
     driver: bridge

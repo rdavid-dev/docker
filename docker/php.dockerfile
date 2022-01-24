@@ -4,9 +4,6 @@ FROM php:8.0.14-fpm-alpine
 ARG USER
 ARG UID
 
-#COPY php ini
-COPY ./config/php/php.ini /usrlocal/etc/php/conf.d/php.ini
-
 # Set working directory
 WORKDIR /var/www/html
 
@@ -150,6 +147,15 @@ RUN echo "php_admin_flag[log_errors] = on" >> /usr/local/etc/php-fpm.d/www.conf
 
 RUN mkdir -p /home/$USER/.composer && \
     chown -R $USER:$USER /home/$USER
+
+
+#COPY php ini
+COPY ./config/php/php.ini /usr/local/etc/php/conf.d/php.ini
+
+#COPY X-DEBUG FILES
+COPY ./config/php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+COPY ./config/php/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
+
 
 EXPOSE 9000
 CMD ["php-fpm"]
