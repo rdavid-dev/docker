@@ -1,13 +1,28 @@
 <template>
-  <main>
-    <router-view></router-view>
-  </main>
+  <div>
+    <Header />
+    <Nav />
+    <main>
+      <h1>Vue using Store</h1>
+      <router-view></router-view>
+    </main>
+    <Footer />
+  </div>
 </template>
 
 <script>
+import Header from "@/components/partials/Header.vue";
+import Nav from "@/components/partials/Nav.vue";
+import Footer from "@/components/partials/Footer.vue";
+
 export default {
-  name: 'App'
-}
+  name: "App",
+  components: {
+    Header,
+    Nav,
+    Footer,
+  },
+};
 </script>
 
 <style>
@@ -18,5 +33,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+section {
+  min-height: 300px;
 }
 </style>

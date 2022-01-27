@@ -1,15 +1,12 @@
 <template>
   <section>
-      Gallery
+    <h1>My Cart</h1>
   </section>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
 </style>

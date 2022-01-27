@@ -1,15 +1,10 @@
 <template>
-  <section>
-      Dashboard
-  </section>
+  <section>Dashboard</section>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
 </style>
