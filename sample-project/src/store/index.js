@@ -1,10 +1,12 @@
 import { createStore } from "vuex";
 import CounterModule from "@/store/modules/counter.js";
-//import article from "@/store/modules/article";
+import TodoModule from "@/store/modules/todos";
 
 const store = createStore({
+    //With namespaced format
     modules: {
-        counter: CounterModule
+        counter: CounterModule,
+        todo: TodoModule
     }
 });
 

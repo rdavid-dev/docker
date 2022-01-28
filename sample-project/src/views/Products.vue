@@ -17,8 +17,7 @@
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, ref } from "vue";
-import axios from "axios";
+import { defineComponent, getCurrentInstance, onBeforeMount, ref } from "vue";
 
 import ProductList from "@/components/products/Product-List.vue";
 import Pagination from "@/components/Pagination.vue";
@@ -29,19 +28,22 @@ export default defineComponent({
     Pagination,
   },
   setup() {
+    const app = getCurrentInstance()
+    const api = app.appContext.config.globalProperties.$api
+
     const products = ref([]);
     const paginate = ref({});
     const isLoading = ref(true)
 
     const loadProducts = async (page) => {
-      const response = await axios.get(`/products?page=${page}`);
-      const resp = await response.data;
+      const response = await api.get(`/products?page=${page}`);
 
       isLoading.value = false
 
-      setPagination(resp);
-      products.value = resp.data;
-      
+      setPagination(response);
+      products.value = response.data;
+
+      console.log(products)
     };
 
     const setPagination = (item) => {
