@@ -3,7 +3,7 @@ import projects from "@/store/modules/projects"
 
 const store = createStore({
     modules: {
-        projects: projects
+        projects
     }
 })
 

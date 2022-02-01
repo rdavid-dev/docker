@@ -3,7 +3,7 @@ import { ref } from "vue"
 export default {
     namespaced: true,
     state: {
-        count: ref(5)
+        count: ref(6)
     },
     getters: {
         getCount: (state) => state.count
