@@ -16,6 +16,9 @@ const increaseStoreCount = () => {
 const decreaseStoreCount = () => {
     let randomNumber = Math.floor(Math.random(1,999) * 100)
     store.dispatch("projects/decreaseCount", randomNumber)
+        .then(response => {
+            console.log(response)
+        })
 }
 
 </script>

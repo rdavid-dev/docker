@@ -8,4 +8,7 @@ const app = createApp(App)
 app.use(routes)
 app.use(store)
 
+import core from "@/core"
+core(app)
+
 app.mount('#app')
