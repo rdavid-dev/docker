@@ -73,6 +73,7 @@ RUN apt-get update && apt-get -y install libaio1 \
   && unzip /tmp/instantclient-sdk-linux.x64-19.14.0.0.0dbru.zip -d /usr/local/ \
   && mv /usr/local/instantclient_19_14 /usr/local/instantclient \
   && ln -sf /usr/local/instantclient/libclntsh.so.19.1 /usr/local/instantclient/libclntsh.so \
+  && ln -sf /usr/local/instantclient/libocci.so.19.1 /usr/local/instantclient/libocci.so \
   && ln -s /usr/local/instantclient/lib* /usr/lib
 
 RUN echo 'instantclient,/usr/local/instantclient/' | pecl install oci8 \
