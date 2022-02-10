@@ -65,11 +65,11 @@ RUN docker-php-ext-install pcntl \
 COPY --from=composer:2.0.2 /usr/bin/composer /usr/local/bin/composer
 
 # Install the Oracle Instant Client
-ADD server/oracle_client/instantclient-basic-linux.x64-19.14.0.0.0dbru.zip /tmp
+ADD server/oracle_client/instantclient-basiclite-linux.x64-19.14.0.0.0dbru.zip /tmp
 ADD server/oracle_client/instantclient-sdk-linux.x64-19.14.0.0.0dbru.zip /tmp
 
 RUN apt-get update && apt-get -y install libaio1 \
-  && unzip /tmp/instantclient-basic-linux.x64-19.14.0.0.0dbru.zip -d /usr/local/ \
+  && unzip /tmp/instantclient-basiclite-linux.x64-19.14.0.0.0dbru.zip -d /usr/local/ \
   && unzip /tmp/instantclient-sdk-linux.x64-19.14.0.0.0dbru.zip -d /usr/local/ \
   && mv /usr/local/instantclient_19_14 /usr/local/instantclient \
   && ln -sf /usr/local/instantclient/libclntsh.so.19.1 /usr/local/instantclient/libclntsh.so \
